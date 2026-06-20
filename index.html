@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eduverse English by Rahul — Pro Learning Platform</title>
+
+  <!-- Tailwind CSS & Plugins -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,aspect-ratio"></script>
+
+  <!-- Google Fonts: Inter, Roboto Flex & Material Symbols -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Flex:opsz,wght@8..144,100..1000&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ------------------------------------------------------------
+       GLOBAL STYLES & CUSTOM ANIMATIONS
+       ------------------------------------------------------------ */
+    :root {
+      --primary: #005bbf;
+      --transition-speed: 0.4s;
+    }
+
+    body {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    /* Transitions */
+    .page-transition {
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .hidden-page {
+      display: none !important;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    /* Glassmorphism */
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(224, 227, 230, 0.4);
+    }
+
+    /* Custom Input Focus */
+    .input-ring:focus-within {
+      box-shadow: 0 0 0 3px rgba(0, 91, 191, 0.15);
+      border-color: var(--primary);
+    }
+
+    /* MCQ Option Cards */
+    .option-card {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .option-card:hover {
+      border-color: var(--primary);
+      background-color: #f0f7ff;
+    }
+    .option-selected {
+      border-color: var(--primary) !important;
+      background-color: #e8f0fe !important;
+      box-shadow: 0 0 0 1px var(--primary);
+    }
+
+    /* Loading Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1f2937;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      z-index: 9999;
+      transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+      box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+    }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }
+  </style>
+</head>
+
+<body class="bg-[#F7FAFD] text-[#181C1F] font-['Inter'] min-h-screen">
+
+  <!-- ==========================================
+       PAGE 1: AUTHENTICATION
+       ========================================== -->
+  <div id="page-auth" class="min-h-screen flex items-center justify-center p-4">
+    <!-- Desktop Side Illustrations -->
+    <div class="hidden lg:flex flex-col gap-6 fixed left-12 top-1/2 -translate-y-1/2 max-w-sm">
+      <div class="glass-card p-6 rounded-2xl shadow-xl animate-fade-in">
+        <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined">auto_stories</span>
+        </div>
+        <h3 class="text-xl font-bold text-blue-800">Advanced Learning</h3>
+        <p class="text-gray-600 text-sm">Access over 5,000+ curated English questions for competitive exams.</p>
+      </div>
+      <div class="glass-card p-6 rounded-2xl shadow-xl delay-150">
+        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined">workspace_premium</span>
+        </div>
+        <h3 class="text-xl font-bold text-green-800">Verified Certificates</h3>
+        <p class="text-gray-600 text-sm">Get recognized for your skills with Eduverse official certifications.</p>
+      </div>
+    </div>
+
+    <!-- Auth Main Card -->
+    <div class="w-full max-w-[450px] bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden">
+      <!-- Header -->
+      <div class="p-8 text-center bg-gray-50 border-b border-gray-100">
+        <img src="https://cdn.phototourl.com/free/2026-06-19-f202526e-7ba2-4835-8ef7-ce981f0f640b.jpg" 
+             alt="Logo" class="w-20 h-20 mx-auto rounded-2xl mb-4 shadow-lg object-cover">
+        <h1 class="text-2xl font-black text-blue-700 tracking-tight">Eduverse English</h1>
+        <p class="text-gray-500 text-sm mt-1">By Rahul Sharma — Expert in English Pedagogy</p>
+      </div>
+
+      <!-- Form Container -->
+      <div class="p-8">
+        <!-- Tabs -->
+        <div class="flex p-1 bg-gray-100 rounded-2xl mb-8">
+          <button id="btn-tab-login" onclick="window.switchAuthTab('login')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-white shadow-sm text-blue-700">Login</button>
+          <button id="btn-tab-register" onclick="window.switchAuthTab('register')" class="flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-500 hover:text-gray-700">Register</button>
+        </div>
+
+        <!-- Login Form -->
+        <form id="form-login" class="space-y-5">
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1">Email Address</label>
+            <div class="relative group">
+              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">mail</span>
+              <input type="email" required placeholder="name@email.com" 
+                     class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+            </div>
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1">Password</label>
+            <div class="relative group">
+              <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">lock</span>
+              <input type="password" required placeholder="••••••••" 
+                     class="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all">
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button type="button" onclick="window.handleForgotPassword()" class="text-xs font-bold text-blue-600 hover:underline">Forgot Password?</button>
+          </div>
+          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-blue-700 active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+            <span>Sign In</span>
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="form-register" class="space-y-4 hidden">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1">
+              <label class="text-xs font-bold text-gray-400 uppercase ml-1">Full Name</label>
+              <input type="text" required placeholder="Rahul" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20">
+            </div>
+            <div class="space-y-1">
+              <label class="text-xs font-bold text-gray-400 uppercase ml-1">University</label>
+              <input type="text" required placeholder="DU" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20">
+            </div>
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1">Email</label>
+            <input type="email" required placeholder="email@example.com" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20">
+          </div>
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-gray-400 uppercase ml-1">Password</label>
+            <input type="password" required placeholder="••••••••" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500/20">
+          </div>
+          <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3.5 rounded-xl shadow-lg hover:bg-blue-700 active:scale-[0.98] transition-all mt-4">
+            Create Account
+          </button>
+        </form>
+
+        <!-- Google Social Login -->
+        <div class="mt-8 flex items-center gap-4">
+          <div class="h-px bg-gray-100 flex-1"></div>
+          <span class="text-xs text-gray-400 font-bold uppercase">Or continue with</span>
+          <div class="h-px bg-gray-100 flex-1"></div>
+        </div>
+        <button onclick="window.handleGoogleSignIn()" class="w-full mt-6 flex items-center justify-center gap-3 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all font-semibold text-gray-700">
+          <img src="https://www.google.com/favicon.ico" class="w-5 h-5">
+          Google Account
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PAGE 2: DASHBOARD (HOME)
+       ========================================== -->
+  <div id="page-home" class="hidden-page pb-24">
+    <!-- Navbar -->
+    <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="https://cdn.phototourl.com/free/2026-06-19-f202526e-7ba2-4835-8ef7-ce981f0f640b.jpg" class="w-9 h-9 rounded-lg">
+          <span class="font-black text-blue-700 text-lg hidden sm:block">Eduverse English</span>
+        </div>
+        <nav class="hidden md:flex items-center gap-8 font-semibold text-gray-500">
+          <a href="#" class="text-blue-600">Home</a>
+          <a href="#" class="hover:text-blue-600 transition-colors">Courses</a>
+          <a href="#" class="hover:text-blue-600 transition-colors">Mock Tests</a>
+        </nav>
+        <div class="flex items-center gap-4">
+          <div class="text-right hidden sm:block">
+            <p id="user-display-name" class="text-sm font-bold text-gray-800">Guest User</p>
+            <p class="text-[10px] text-gray-500 uppercase font-bold tracking-widest">Free Plan</p>
+          </div>
+          <button onclick="window.handleSignOut()" class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-red-50 hover:text-red-600 transition-all">
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 pt-8">
+<!-- Free Trial Demo Section -->
+<section class="mb-12">
+  <div class="bg-gradient-to-br from-blue-700 to-indigo-900 rounded-[2.5rem] p-8 text-white shadow-2xl relative overflow-hidden group">
+    <!-- Decorative background shape -->
+    <div class="absolute -right-10 -top-10 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:scale-110 transition-transform duration-700"></div>
+    
+    <div class="relative z-10">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="bg-yellow-400 text-blue-900 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-sm">Featured Test</span>
+        <span class="flex h-2 w-2 rounded-full bg-red-400 animate-ping"></span>
+        <span class="text-xs font-bold text-blue-100">সবাইর জন্য উন্মুক্ত</span>
+      </div>
+      
+      <h2 class="text-2xl md:text-4xl font-black leading-tight max-w-2xl">
+        📖 English Department Admission Demo Test – 02
+      </h2>
+      <p class="text-blue-100/80 mt-4 max-w-2xl text-sm md:text-base leading-relaxed font-medium">
+        নিজেকে যাচাই করুন, প্রস্তুতিকে এগিয়ে নিন। ভর্তি পরীক্ষার আদলে তৈরি এই Demo Test-এর মাধ্যমে আপনার English Grammar, Vocabulary ও Literature দক্ষতা মূল্যায়ন করুন।
+      </p>
+
+      <div class="flex flex-wrap items-center gap-6 mt-8">
+        <div class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
+          <span class="material-symbols-outlined text-yellow-400">timer</span>
+          <span class="font-bold text-sm">১৫ মিনিট</span>
+        </div>
+        <div class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
+          <span class="material-symbols-outlined text-green-400">task_alt</span>
+          <span class="font-bold text-sm">১০টি প্রশ্ন</span>
+        </div>
+      </div>
+
+      <button onclick="window.startFreeTrial()" class="mt-8 bg-white text-blue-700 px-10 py-4 rounded-2xl font-black text-lg hover:bg-blue-50 transition-all shadow-xl hover:shadow-white/20 flex items-center gap-3 active:scale-95">
+        Start Demo Test <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+      <!-- Categories Section -->
+      <section class="mb-12">
+        <div class="flex items-end justify-between mb-8">
+          <div>
+            <h3 class="text-2xl font-black text-gray-800">Learning Categories</h3>
+            <p class="text-gray-500 font-medium">Select a module to begin your journey</p>
+          </div>
+          <button class="text-blue-600 font-bold hover:underline">View All</button>
+        </div>
+        <div id="category-list" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          <!-- Categorires dynamically injected here -->
+          <div class="animate-pulse bg-gray-200 h-32 rounded-3xl"></div>
+          <div class="animate-pulse bg-gray-200 h-32 rounded-3xl"></div>
+          <div class="animate-pulse bg-gray-200 h-32 rounded-3xl"></div>
+        </div>
+      </section>
+
+<!-- All Exam Lists Section -->
+      <section class="mb-12">
+        <div class="flex items-end justify-between mb-8">
+          <div>
+            <h3 class="text-2xl font-black text-gray-800">সকল এক্সাম লিস্ট</h3>
+            <p class="text-gray-500 font-medium">আপনার পছন্দের পরীক্ষাটি শুরু করুন</p>
+          </div>
+        </div>
+        
+        <!-- এখানে এডমিনের সব এক্সাম কার্ড আসবে -->
+        <div id="all-exams-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- লোডিং অবস্থা -->
+          <div class="animate-pulse bg-gray-200 h-40 rounded-[2.5rem]"></div>
+          <div class="animate-pulse bg-gray-200 h-40 rounded-[2.5rem]"></div>
+        </div>
+      </section>
+    </main>
+<!-- ==========================================
+       CUSTOM FOOTER (One Line - Black & Blue)
+       ========================================== -->
+<footer class="mt-16 mb-20 text-center px-4 pt-6 border-t border-gray-100">
+  <p class="text-[11px] md:text-xs font-black text-black uppercase tracking-wider leading-relaxed">
+    ® 2026 Powered by 
+    <a href="https://www.facebook.com/profile.php?id=61590709282481" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors underline decoration-1 underline-offset-4">Momteach BD</a> 
+    <span class="mx-2 text-gray-300 font-normal">|</span> 
+    Developed by 
+    <a href="https://www.facebook.com/md.mominul.islam.80070" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors underline decoration-1 underline-offset-4">Md Mominul Islam</a>
+  </p>
+</footer>
+    <!-- Mobile Bottom Navigation -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 glass-effect border-t border-gray-100 px-6 py-3 flex justify-between items-center z-50">
+      <button onclick="window.showPage('home')" class="flex flex-col items-center gap-1 text-blue-600">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-[10px] font-bold">Home</span>
+      </button>
+<button onclick="window.showPage('others')" class="flex flex-col items-center gap-1 text-gray-400">
+  <span class="material-symbols-outlined">grid_view</span>
+  <span class="text-[10px] font-bold">Others</span>
+</button>
+      <button onclick="window.showPage('exam')" class="w-12 h-12 bg-blue-600 rounded-2xl text-white shadow-xl -mt-10 flex items-center justify-center">
+        <span class="material-symbols-outlined">play_arrow</span>
+      </button>
+<!-- Mobile Nav এর History বাটন পরিবর্তন করুন -->
+<button onclick="window.openHistoryPage()" class="flex flex-col items-center gap-1 text-gray-400">
+  <span class="material-symbols-outlined">history</span>
+  <span class="text-[10px] font-bold">History</span>
+</button>
+<button onclick="window.openProfilePage()" class="flex flex-col items-center gap-1 text-gray-400">
+  <span class="material-symbols-outlined">person</span>
+  <span class="text-[10px] font-bold">Profile</span>
+</button>
+    </nav>
+  </div>
+
+  <!-- ==========================================
+       PAGE 3: MCQ EXAM INTERFACE
+       ========================================== -->
+  <div id="page-exam" class="hidden-page min-h-screen bg-white">
+    <!-- Exam Header -->
+    <div class="h-16 border-b flex items-center justify-between px-4 md:px-12 bg-gray-50">
+      <button onclick="window.showPage('home')" class="flex items-center gap-2 text-gray-500 font-bold hover:text-red-600">
+        <span class="material-symbols-outlined">close</span>
+        <span class="hidden sm:inline">Exit Exam</span>
+      </button>
+      <div class="flex items-center gap-3">
+        <div class="flex flex-col items-center px-4 py-1 bg-white rounded-xl border">
+          <span id="exam-timer" class="text-xl font-black text-blue-600">10:00</span>
+          <span class="text-[8px] uppercase font-bold text-gray-400 tracking-tighter">Time Remaining</span>
+        </div>
+      </div>
+      <button onclick="window.handleSubmitExam()" class="bg-blue-600 text-white px-6 py-2 rounded-xl font-bold shadow-md hover:bg-blue-700">Submit</button>
+    </div>
+
+    <!-- Exam Content -->
+<!-- Exam Content (পরিবর্তিত অংশ) -->
+<div id="exam-start-view" class="max-w-4xl mx-auto pt-16 px-4 text-center">
+  <div class="w-24 h-24 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+    <span class="material-symbols-outlined text-5xl">quiz</span>
+  </div>
+  <h2 id="start-exam-title" class="text-3xl font-black text-gray-800">Ready to Start?</h2>
+  <p id="start-exam-desc" class="text-gray-500 mt-3 max-w-md mx-auto leading-relaxed">Loading details...</p>
+  
+  <div class="grid grid-cols-3 gap-4 my-10">
+    <div class="p-4 bg-gray-50 rounded-2xl border">
+      <p class="text-xs font-bold text-gray-400 uppercase">Total Items</p>
+      <p id="label-total-qs" class="text-xl font-black text-gray-700">--</p>
+    </div>
+    <div class="p-4 bg-gray-50 rounded-2xl border">
+      <p class="text-xs font-bold text-gray-400 uppercase">Per Question</p>
+      <p id="label-total-marks" class="text-xl font-black text-gray-700">--</p>
+    </div>
+    <div class="p-4 bg-gray-50 rounded-2xl border">
+      <p class="text-xs font-bold text-gray-400 uppercase">Duration</p>
+      <p id="label-duration" class="text-xl font-black text-gray-700">-- Min</p>
+    </div>
+  </div>
+  <button onclick="window.beginMockTest()" class="w-full max-w-sm bg-blue-600 text-white py-4 rounded-2xl font-black text-xl shadow-xl hover:bg-blue-700 transition-all">Start Now</button>
+</div>
+
+<!-- Active Question View (Clean & Minimalist List View) -->
+<div id="active-question-view" class="hidden max-w-4xl mx-auto pt-4 px-4">
+  
+  <!-- পরিচ্ছন্ন হেডার: শুধুমাত্র শিরোনাম এবং নির্দেশিকা -->
+  <div class="sticky top-0 bg-white/80 backdrop-blur-md py-6 z-40 border-b border-gray-100 mb-8">
+    <div class="flex flex-col">
+      <h3 id="exam-running-title" class="text-2xl md:text-3xl font-black text-gray-800 tracking-tight">
+        Exam Loading...
+      </h3>
+      <div class="flex items-center gap-2 mt-2">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        <p class="text-gray-500 font-medium text-sm">নিচের প্রশ্নগুলোর সঠিক উত্তর নির্বাচন করুন</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- সকল প্রশ্ন এখানে সুন্দরভাবে লিস্ট আকারে আসবে -->
+  <div id="questions-list-container" class="space-y-12 pb-20">
+    <!-- প্রশ্ন এবং প্যাসেজগুলো এখানে ডাইনামিকভাবে ইনজেক্ট হবে -->
+  </div>
+
+
+      <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100 shadow-sm mb-8">
+        <h3 id="question-text" class="text-xl md:text-2xl font-bold text-gray-800 leading-snug">
+          Wait, loading question...
+        </h3>
+      </div>
+
+      <div id="options-grid" class="space-y-4">
+        <!-- Options generated here -->
+      </div>
+
+      <div class="flex items-center justify-between mt-12 pt-8 border-t border-gray-100">
+  
+      </div>
+    </div>
+
+    <!-- Result View -->
+    <div id="result-view" class="hidden max-w-2xl mx-auto pt-16 px-4 text-center">
+      <div class="relative w-48 h-48 mx-auto mb-8">
+        <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" stroke="#F3F4F6" stroke-width="8" fill="none" />
+          <circle id="score-circle" cx="50" cy="50" r="45" stroke="#2563EB" stroke-width="8" stroke-dasharray="282.7" stroke-dashoffset="282.7" fill="none" class="transition-all duration-1000" />
+        </svg>
+        <div class="absolute inset-0 flex flex-col items-center justify-center">
+          <span id="final-score" class="text-5xl font-black text-blue-600">0%</span>
+          <span class="text-[10px] font-bold text-gray-400 uppercase">Overall Performance</span>
+        </div>
+      </div>
+      <h2 id="result-title" class="text-3xl font-black text-gray-800">Well Done!</h2>
+      <p id="result-message" class="text-gray-500 mt-2">You have completed the mock test successfully.</p>
+      
+      <div class="grid grid-cols-2 gap-4 mt-12 mb-8">
+        <div class="p-6 bg-green-50 rounded-3xl border border-green-100">
+          <p class="text-green-600 font-black text-3xl" id="count-correct">0</p>
+          <p class="text-green-800/60 font-bold text-xs uppercase">Correct Answers</p>
+        </div>
+        <div class="p-6 bg-red-50 rounded-3xl border border-red-100">
+          <p class="text-red-600 font-black text-3xl" id="count-wrong">0</p>
+          <p class="text-red-800/60 font-bold text-xs uppercase">Wrong Answers</p>
+        </div>
+      </div>
+<!-- রেজাল্ট ডিটেইলস লিস্ট -->
+<div class="mt-12 text-left">
+    <h3 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <span class="material-symbols-outlined text-blue-600">fact_check</span>
+        প্রশ্নের বিস্তারিত বিশ্লেষণ
+    </h3>
+    <div id="exam-analysis-list" class="space-y-6">
+        <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে ডিটেইলস ঢুকবে -->
+    </div>
+</div>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <button onclick="window.showPage('home')" class="flex-1 bg-blue-600 text-white py-4 rounded-2xl font-bold shadow-lg">Back to Home</button>
+        <button onclick="window.location.reload()" class="flex-1 bg-gray-100 text-gray-800 py-4 rounded-2xl font-bold">Try Again</button>
+      </div>
+    </div>
+  </div>
+<!-- ==========================================
+       PAGE 4: CATEGORY DETAILS (New)
+       ========================================== -->
+  <div id="page-category-details" class="hidden-page pb-24">
+    <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+      <div class="max-w-7xl mx-auto px-4 h-16 flex items-center gap-4">
+        <button onclick="window.showPage('home')" class="p-2 hover:bg-gray-100 rounded-full flex items-center">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <h2 id="selected-cat-title" class="font-black text-xl text-blue-700">Category Name</h2>
+      </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 pt-8">
+      <div id="topic-list" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- এখানে ক্যাটাগরি অনুযায়ী লিস্টগুলো আসবে -->
+      </div>
+    </main>
+  </div>
+<!-- bKash Payment Modal -->
+<div id="payment-modal" class="fixed inset-0 bg-black/70 z-[200] hidden items-center justify-center p-4 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-[380px] rounded-[2.5rem] overflow-hidden shadow-2xl animate-fade-in border border-white/20">
+        <!-- bKash Header -->
+        <div class="bg-[#D12053] p-8 text-center text-white relative">
+            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/30">
+                <span class="material-symbols-outlined text-3xl">payments</span>
+            </div>
+            <h3 class="font-black text-lg">Send Money to:</h3>
+            <div class="text-2xl font-black tracking-widest mt-1">01726176944</div>
+            <p class="text-[10px] font-bold opacity-80 uppercase tracking-[3px] mt-2">Personal Account</p>
+        </div>
+
+        <!-- Input Section -->
+        <div class="p-8 space-y-6">
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">Payable Amount (Fixed)</label>
+                <div class="relative">
+                    <span class="absolute left-4 top-1/2 -translate-y-1/2 font-black text-gray-400">৳</span>
+                    <input id="pay-amount" type="number" value="299" readonly 
+                           class="w-full pl-10 pr-4 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl font-black text-xl text-blue-700 focus:outline-none">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">bKash Transaction ID (TrxID)</label>
+                <input id="pay-trxid" type="text" placeholder="e.g. 8N7X6W5V" 
+                       class="w-full px-5 py-4 bg-white border-2 border-pink-100 rounded-2xl focus:border-[#D12053] focus:ring-4 focus:ring-pink-50 outline-none font-mono text-center text-lg uppercase transition-all">
+            </div>
+
+            <div class="pt-2">
+                <button onclick="window.submitPaymentRequest()" 
+                        class="w-full bg-[#D12053] text-white py-5 rounded-2xl font-black text-lg shadow-xl shadow-pink-200 active:scale-95 transition-all flex items-center justify-center gap-3">
+                    VERIFY PAYMENT
+                </button>
+                <button onclick="document.getElementById('payment-modal').classList.add('hidden')" 
+                        class="w-full mt-4 text-gray-400 font-bold text-sm hover:text-gray-600 transition-colors">
+                    Close and Browse
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ==========================================
+       PAGE: OTHERS (LEARNING HUB)
+       ========================================== -->
+<div id="page-others" class="hidden-page pb-24">
+  <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="window.showPage('home')" class="p-2 hover:bg-gray-100 rounded-full">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="font-black text-blue-700 text-lg">Learning Hub</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 pt-8">
+    <div class="mb-8">
+      <h2 class="text-3xl font-black text-gray-800">ফ্রি গ্রামার কোর্স</h2>
+      <p class="text-gray-500">এখানে আপনি ইংরেজি গ্রামারের বেসিক থেকে এডভান্স শিখতে পারবেন।</p>
+    </div>
+
+    <!-- টপিক লিস্ট -->
+    <div id="learning-topics-grid" class="grid gap-4">
+      <!-- Parts of Speech Card -->
+      <div onclick="window.openGrammarContent('parts-of-speech')" class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-md transition-all cursor-pointer flex items-center justify-between group">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined">menu_book</span>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-800 text-lg">Parts of Speech (শব্দের পদ)</h4>
+            <p class="text-sm text-gray-400">৮টি প্রকারভেদ ও বিস্তারিত আলোচনা</p>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-gray-300 group-hover:text-blue-600 group-hover:translate-x-1 transition-all">arrow_forward_ios</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ==========================================
+       PAGE: OTHERS (LEARNING HUB)
+       ========================================== -->
+<div id="page-others" class="hidden-page pb-24">
+  <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="window.showPage('home')" class="p-2 hover:bg-gray-100 rounded-full flex items-center">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="font-black text-blue-700 text-lg">Learning Hub</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 pt-8">
+    <div class="mb-10 text-center">
+      <h2 class="text-3xl font-black text-gray-800">English Grammar Course</h2>
+      <p class="text-gray-500 mt-2">ফ্রি এবং সহজ উপায়ে ইংরেজি গ্রামার শিখুন</p>
+    </div>
+
+    <!-- Parts of Speech Main Card -->
+    <div onclick="window.openGrammarIndex()" class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-[2.5rem] p-8 text-white shadow-xl cursor-pointer hover:scale-[1.01] transition-all group mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <span class="bg-white/20 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">Master Class</span>
+          <h3 class="text-3xl font-black mt-3">Parts of Speech (শব্দের পদ)</h3>
+          <p class="text-blue-100 mt-2 opacity-80">A to Z details with Definitions, Types and MCQs</p>
+        </div>
+        <div class="w-16 h-16 bg-white/20 rounded-3xl flex items-center justify-center group-hover:rotate-12 transition-transform">
+          <span class="material-symbols-outlined text-4xl">menu_book</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="grammar-topics-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <!-- অন্য কোনো টপিক ভবিষ্যতে এখানে এড করতে পারবেন -->
+    </div>
+  </main>
+</div>
+
+<!-- ==========================================
+       PAGE: GRAMMAR CONTENT VIEW
+       ========================================== -->
+<div id="page-grammar-view" class="hidden-page pb-24 bg-white">
+  <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <button onclick="window.showPage('others')" class="flex items-center gap-2 text-gray-500 font-bold">
+        <span class="material-symbols-outlined">arrow_back</span> Back
+      </button>
+      <h2 class="font-black text-blue-700">Study Material</h2>
+      <div class="w-10"></div>
+    </div>
+  </header>
+
+  <main id="grammar-content-area" class="max-w-4xl mx-auto px-6 py-10">
+    <!-- এখানে জাভাস্ক্রিপ্ট দিয়ে সব ডাটা ঢুকবে -->
+  </main>
+</div>
+<!-- ==========================================
+       PAGE: EXAM HISTORY
+       ========================================== -->
+<div id="page-history" class="hidden-page pb-24">
+  <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="window.showPage('home')" class="p-2 hover:bg-gray-100 rounded-full">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="font-black text-blue-700 text-lg">My Exam History</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 pt-8">
+    <div class="mb-8">
+      <h2 class="text-2xl font-black text-gray-800">আপনার পরীক্ষার ইতিহাস</h2>
+      <p class="text-gray-500">এখানে আপনার দেওয়া সব পরীক্ষার ফলাফল দেখতে পারবেন।</p>
+    </div>
+
+    <!-- হিস্ট্রি লিস্ট আসবে এখানে -->
+    <div id="history-list" class="space-y-4">
+      <!-- Loading state -->
+      <div class="text-center py-10 text-gray-400">ইতিহাস লোড হচ্ছে...</div>
+    </div>
+  </main>
+</div>
+<!-- ==========================================
+       PAGE: USER PROFILE
+       ========================================== -->
+<div id="page-profile" class="hidden-page pb-24">
+  <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <button onclick="window.showPage('home')" class="p-2 hover:bg-gray-100 rounded-full">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="font-black text-blue-700 text-lg">My Profile</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto px-4 pt-8">
+    <!-- User Info Card -->
+    <div class="bg-white rounded-[2.5rem] p-8 shadow-sm border border-gray-100 text-center mb-6">
+      <div class="relative w-24 h-24 mx-auto mb-4">
+        <img src="https://ui-avatars.com/api/?name=User&background=005bbf&color=fff&size=128" id="profile-img" class="w-full h-full rounded-3xl object-cover shadow-lg">
+        <div class="absolute -bottom-2 -right-2 bg-green-500 w-6 h-6 rounded-full border-4 border-white"></div>
+      </div>
+      <h2 id="profile-name" class="text-2xl font-black text-gray-800">Loading...</h2>
+      <p id="profile-email" class="text-gray-500 font-medium text-sm">email@example.com</p>
+      
+      <div class="mt-6 pt-6 border-t border-gray-50 grid grid-cols-2 gap-4">
+        <div class="text-left p-3 bg-blue-50 rounded-2xl">
+          <p class="text-[10px] font-black text-blue-400 uppercase">University</p>
+          <p id="profile-uni" class="font-bold text-gray-700 text-sm truncate">Not Set</p>
+        </div>
+        <div class="text-left p-3 bg-gray-50 rounded-2xl">
+          <p class="text-[10px] font-black text-gray-400 uppercase">Status</p>
+          <p id="profile-status" class="font-bold text-gray-700 text-sm">Free User</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Info Section -->
+    <div class="space-y-4">
+      <h3 class="text-sm font-black text-gray-400 uppercase ml-4 tracking-widest">Connect with us</h3>
+      
+      <!-- App Owner Card -->
+<!-- App Owner Card (Updated) -->
+<div onclick="window.showPage('owner')" class="bg-white p-5 rounded-3xl border border-gray-100 flex items-center justify-between group cursor-pointer hover:border-blue-500 transition-all shadow-sm">
+  <div class="flex items-center gap-4">
+    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+      <span class="material-symbols-outlined text-3xl">account_circle</span>
+    </div>
+    <div>
+      <h4 class="font-black text-gray-800">App Owner Profile</h4>
+      <p class="text-xs text-gray-400 font-medium">Click to see Rahul's details</p>
+    </div>
+  </div>
+  <span class="material-symbols-outlined text-gray-300 group-hover:text-blue-600">chevron_right</span>
+</div>
+
+      <!-- Developer Card -->
+      <a href="https://www.facebook.com/md.mominul.islam.80070" target="_blank" class="bg-white p-5 rounded-3xl border border-gray-100 flex items-center justify-between group hover:border-blue-500 transition-all shadow-sm block">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 bg-gray-100 text-gray-600 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-3xl">terminal</span>
+          </div>
+          <div>
+            <h4 class="font-black text-gray-800">Developer Profile</h4>
+            <p class="text-xs text-gray-400 font-medium">Click to connect with developer</p>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-gray-300 group-hover:text-blue-600">open_in_new</span>
+      </a>
+
+      <!-- Logout Button -->
+      <button onclick="window.handleSignOut()" class="w-full mt-6 bg-red-50 text-red-600 py-4 rounded-[2rem] font-black flex items-center justify-center gap-2 hover:bg-red-100 transition-all">
+        <span class="material-symbols-outlined">logout</span>
+        Sign Out from Account
+      </button>
+    </div>
+  </main>
+</div>
+<!-- ==========================================
+       PAGE: APP OWNER PROFILE (Rahul)
+       ========================================== -->
+<div id="page-owner" class="hidden-page pb-24 bg-white">
+  <header class="glass-effect sticky top-0 z-50 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 h-16 flex items-center gap-4">
+      <button onclick="window.showPage('profile')" class="p-2 hover:bg-gray-100 rounded-full">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <span class="font-black text-blue-700 text-lg">Owner Profile</span>
+    </div>
+  </header>
+
+  <main class="max-w-xl mx-auto px-6 pt-10">
+    <!-- Owner Identity Card -->
+    <div class="text-center">
+      <div class="relative w-40 h-40 mx-auto mb-6">
+        <div class="absolute inset-0 bg-blue-600 rounded-[3rem] rotate-6"></div>
+        <img src="https://cdn.phototourl.com/free/2026-06-20-fbfe3137-cbb3-459a-af0c-d531a746daf9.jpg" 
+             class="relative w-full h-full rounded-[3rem] object-cover shadow-2xl border-4 border-white">
+      </div>
+      
+      <h2 class="text-3xl font-black text-gray-800 tracking-tighter uppercase mb-2">
+        RUHUL AMIN RAHUL
+      </h2>
+      <div class="flex items-center justify-center gap-2 text-blue-600 font-bold mb-8">
+        <span class="material-symbols-outlined text-sm">verified</span>
+        <span class="text-xs uppercase tracking-widest">Founder & Owner</span>
+      </div>
+    </div>
+
+    <!-- Info Sections with Custom Separators -->
+    <div class="space-y-8">
+      
+      <!-- Academic Info -->
+      <div class="border-y-2 border-gray-100 py-6 space-y-4">
+        <div class="flex items-start gap-4">
+          <span class="material-symbols-outlined text-blue-600">school</span>
+          <div>
+            <p class="text-sm font-black text-gray-800">Department of English</p>
+            <p class="text-xs text-gray-500 font-bold uppercase">Varendra University</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Professional Identity -->
+      <div class="space-y-4">
+        <div class="p-5 bg-blue-50 rounded-3xl border border-blue-100">
+          <p class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-1">Organization</p>
+          <p class="text-lg font-black text-blue-800">Eduverse English by Rahul</p>
+        </div>
+        
+        <div class="grid grid-cols-1 gap-4">
+          <div class="p-4 border border-gray-100 rounded-2xl">
+            <p class="text-[10px] font-black text-gray-400 uppercase mb-2">Current Position</p>
+            <p class="text-sm font-bold text-gray-700">Undergraduate Student (Honours Level)</p>
+          </div>
+          <div class="p-4 border border-gray-100 rounded-2xl bg-gray-50">
+            <p class="text-[10px] font-black text-gray-400 uppercase mb-2">Professional Role</p>
+            <p class="text-sm font-bold text-gray-700 leading-relaxed">
+              English Language Instructor | Admission Mentor | Educational Guide
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <div class="border-t-2 border-dashed border-gray-200 pt-8">
+        <h4 class="text-xs font-black text-gray-400 uppercase tracking-[3px] mb-4">About the Educator</h4>
+        <p class="text-gray-600 leading-relaxed text-sm font-medium">
+          An English educator dedicated to guiding students in English language learning, academic improvement, and university admission preparation. Focused on building strong foundational skills in English for academic and professional success.
+        </p>
+      </div>
+
+      <!-- Contact Actions -->
+      <div class="grid grid-cols-2 gap-4 pt-6">
+        <a href="https://www.facebook.com/md.ruhulamin.rahul.31" target="_blank" class="flex flex-col items-center justify-center p-6 bg-blue-600 text-white rounded-[2rem] shadow-xl shadow-blue-100 active:scale-95 transition-all">
+          <span class="material-symbols-outlined mb-2 text-3xl">facebook</span>
+          <span class="text-[10px] font-black uppercase">Facebook</span>
+        </a>
+        <a href="tel:+8801726176944" class="flex flex-col items-center justify-center p-6 bg-green-600 text-white rounded-[2rem] shadow-xl shadow-green-100 active:scale-95 transition-all">
+          <span class="material-symbols-outlined mb-2 text-3xl">call</span>
+          <span class="text-[10px] font-black uppercase">Call Owner</span>
+        </a>
+      </div>
+
+    </div>
+  </main>
+</div>
+  <div id="toast">Message here</div>
+
+  <!-- ==========================================
+       JAVASCRIPT LOGIC (Firebase + App)
+       ========================================== -->
+  <script type="module">
+    // --- Firebase Modules ---
+    // --- Firebase Modules ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+// নিচে দেখুন getDoc যোগ করা হয়েছে:
+import { getFirestore, collection, addDoc, getDocs, doc, setDoc, query, orderBy, onSnapshot, where, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    // --- Configuration (Security Note: Restrict these keys in Firebase Console) ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyBF1khhBbpjafz7_75qVSi_m5nr2dr1-xQ",
+      authDomain: "read-a6158.firebaseapp.com",
+      projectId: "read-a6158",
+      storageBucket: "read-a6158.firebasestorage.app",
+      messagingSenderId: "13010542412",
+      appId: "1:13010542412:web:a2b864b91c4aaebe9039e9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    // --- App State ---
+    const state = {
+      currentPage: 'auth',
+      user: null,
+      exam: {
+        questions: [
+          { q: "Identify the correct sentence:", opts: ["He as well as his friends are coming", "He as well as his friends is coming", "He along with his friends have came", "He and his friends is coming"], ans: 1 },
+          { q: "What is the synonym of 'Ephemeral'?", opts: ["Eternal", "Transient", "Strong", "Unimportant"], ans: 1 },
+          { q: "I have no money ___ hand.", opts: ["in", "on", "at", "by"], ans: 0 },
+          { q: "The word 'Omnivorous' means:", opts: ["Eating everything", "Eating only meat", "Eating only plants", "Eating nothing"], ans: 0 },
+          { q: "Choose the correct spelling:", opts: ["Lieutenant", "Leutenant", "Lutenant", "Lieutenent"], ans: 0 },
+          { q: "The idiom 'A man of straw' means:", opts: ["A very active person", "A man of no substance", "A man of wealth", "An ungrateful person"], ans: 1 },
+          { q: "Which one is plural?", opts: ["Criteria", "Crisis", "Cactus", "Radius"], ans: 0 },
+          { q: "The past participle of 'Slay' is:", opts: ["Slain", "Slayed", "Slew", "Slayen"], ans: 0 },
+          { q: "What is the antonym of 'Vocal'?", opts: ["Silent", "Talkative", "Loud", "Active"], ans: 0 },
+          { q: "He said, 'I have been working.' (Change to Indirect):", opts: ["He said he was working", "He said that he had been working", "He said he worked", "He says he is working"], ans: 1 }
+        ],
+        currentIdx: 0,
+        userAnswers: [],
+        timeLeft: 600,
+        timer: null,
+        isStarted: false
+      }
+    };
+
+    // --- UI Helpers ---
+    window.showPage = (pageId) => {
+      document.querySelectorAll('[id^="page-"]').forEach(p => p.classList.add('hidden-page'));
+      document.getElementById('page-' + pageId).classList.remove('hidden-page');
+      state.currentPage = pageId;
+      window.scrollTo(0, 0);
+    };
+
+    window.showToast = (msg, isError = false) => {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.style.backgroundColor = isError ? '#ef4444' : '#1f2937';
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    };
+
+    // --- Auth Logic ---
+    window.switchAuthTab = (type) => {
+      const loginBtn = document.getElementById('btn-tab-login');
+      const regBtn = document.getElementById('btn-tab-register');
+      const loginForm = document.getElementById('form-login');
+      const regForm = document.getElementById('form-register');
+
+      if (type === 'login') {
+        loginBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-white shadow-sm text-blue-700";
+        regBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-500 hover:text-gray-700";
+        loginForm.classList.remove('hidden');
+        regForm.classList.add('hidden');
+      } else {
+        regBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all bg-white shadow-sm text-blue-700";
+        loginBtn.className = "flex-1 py-2.5 rounded-xl text-sm font-bold transition-all text-gray-500 hover:text-gray-700";
+        regForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      }
+    };
+
+    document.getElementById('form-login').onsubmit = async (e) => {
+      e.preventDefault();
+      const [email, password] = e.target.querySelectorAll('input');
+      try {
+        await signInWithEmailAndPassword(auth, email.value, password.value);
+        window.showToast("Login Successful!");
+      } catch (err) {
+        window.showToast(err.message, true);
+      }
+    };
+
+    document.getElementById('form-register').onsubmit = async (e) => {
+      e.preventDefault();
+      const [name, uni, email, pass] = e.target.querySelectorAll('input');
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email.value, pass.value);
+        await setDoc(doc(db, "users", cred.user.uid), {
+          displayName: name.value,
+          university: uni.value,
+          email: email.value,
+          createdAt: new Date()
+        });
+        window.showToast("Registration Successful!");
+      } catch (err) {
+        window.showToast(err.message, true);
+      }
+    };
+
+    window.handleGoogleSignIn = async () => {
+      try {
+        await signInWithPopup(auth, googleProvider);
+        window.showToast("Google Sign-In Successful!");
+      } catch (err) {
+        window.showToast(err.message, true);
+      }
+    };
+
+    window.handleSignOut = () => signOut(auth);
+
+    window.handleForgotPassword = async () => {
+      const email = document.querySelector('#form-login input[type="email"]').value;
+      if(!email) return window.showToast("Enter email first", true);
+      try {
+        await sendPasswordResetEmail(auth, email);
+        window.showToast("Password reset link sent!");
+      } catch (err) {
+        window.showToast(err.message, true);
+      }
+    };
+
+    // --- Observer ---
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        state.user = user;
+        document.getElementById('user-display-name').textContent = user.displayName || user.email.split('@')[0];
+        window.showPage('home');
+        
+        loadCategories();      // ক্যাটাগরি লোড হবে
+        loadAllExamsHome();   // এই নতুন ফাংশনটি এখন সব এক্সাম লিস্ট লোড করবে
+      } else {
+        state.user = null;
+        window.showPage('auth');
+      }
+    });
+
+    // --- Mock Database / Categories ---
+// --- ক্যাটাগরিগুলো ডাটাবেজ থেকে লোড করা (Replace the old loadCategories) ---
+    async function loadCategories() {
+      const catList = document.getElementById('category-list');
+      const q = query(collection(db, "categories"), orderBy("createdAt", "desc"));
+      
+      onSnapshot(q, (snapshot) => {
+        catList.innerHTML = '';
+        snapshot.forEach((doc) => {
+          const c = doc.data();
+          catList.innerHTML += `
+            <div onclick="window.openCategory('${doc.id}', '${c.name}')" class="glass-card p-5 rounded-[2rem] flex flex-col items-center text-center group hover:border-blue-500 transition-all cursor-pointer">
+              <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform overflow-hidden">
+                <img src="${c.image}" class="w-full h-full object-cover">
+              </div>
+              <h4 class="font-bold text-gray-800 text-sm">${c.name}</h4>
+              <p class="text-[10px] text-gray-400 font-bold mt-1">Explore Topics</p>
+            </div>`;
+        });
+      });
+    }
+
+    // --- নির্দিষ্ট ক্যাটাগরির ভেতরে যা যা আছে তা দেখানো (Add this function) ---
+    window.openCategory = async (catId, catName) => {
+      document.getElementById('selected-cat-title').innerText = catName;
+      window.showPage('category-details');
+      
+      const topicList = document.getElementById('topic-list');
+      topicList.innerHTML = '<p class="text-center col-span-full">লোড হচ্ছে...</p>';
+
+      // শুধুমাত্র সেই লিস্টগুলো আনবে যাদের categoryId এই ক্যাটাগরির সাথে মিলে যায়
+      const q = query(collection(db, "exam_lists"), where("categoryId", "==", catId));
+      const querySnapshot = await getDocs(q);
+      
+      topicList.innerHTML = '';
+      if (querySnapshot.empty) {
+        topicList.innerHTML = '<p class="text-center col-span-full text-gray-500">এই ক্যাটাগরিতে এখনো কোনো টপিক যোগ করা হয়নি।</p>';
+        return;
+      }
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        topicList.innerHTML += `
+          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm flex justify-between items-center group hover:shadow-md transition-all">
+            <div>
+              <h4 class="font-black text-gray-800 text-lg">${data.name}</h4>
+              <p class="text-gray-500 text-sm mt-1">${data.desc || 'পরীক্ষা শুরু করতে বাটনে ক্লিক করুন'}</p>
+            </div>
+            <button onclick="window.showPage('exam')" class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+              <span class="material-symbols-outlined">play_arrow</span>
+            </button>
+          </div>`;
+      });
+    };
+
+    function startTimer() {
+      state.exam.timer = setInterval(() => {
+        state.exam.timeLeft--;
+        const m = Math.floor(state.exam.timeLeft / 60);
+        const s = state.exam.timeLeft % 60;
+        document.getElementById('exam-timer').textContent = `${m}:${s < 10 ? '0'+s : s}`;
+        if(state.exam.timeLeft <= 0) window.handleSubmitExam();
+      }, 1000);
+    }
+
+function renderQuestion() {
+  const container = document.getElementById('questions-list-container');
+  if (!container) return;
+  
+  document.getElementById('exam-running-title').textContent = activeExamData.name;
+  container.innerHTML = '';
+
+  state.exam.questions.forEach((q, i) => {
+    let passageHtml = '';
+    
+    // ডাটাবেজে যদি 'passage' থাকে তবেই এটি দেখাবে
+    if (q.passage && q.passage.trim() !== "") {
+      passageHtml = `
+        <div class="bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-2xl mb-6 shadow-sm">
+          <div class="flex items-center gap-2 text-amber-700 font-bold mb-2 text-sm">
+            <span class="material-symbols-outlined text-lg">description</span>
+            নিচের অংশটি পড়ে প্রশ্নটির উত্তর দাও:
+          </div>
+          <div class="text-gray-800 leading-relaxed italic text-base whitespace-pre-line">${q.passage}</div>
+        </div>
+      `;
+    }
+
+    const questionHtml = `
+      <div class="question-block border-b border-gray-100 pb-12 mb-8" id="q-block-${i}">
+        ${passageHtml}
+        <div class="flex gap-3 mb-6">
+          <span class="flex-shrink-0 w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-sm">${i + 1}</span>
+          <h3 class="text-lg md:text-xl font-bold text-gray-800 leading-tight">${q.q}</h3>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 ml-0 md:ml-11">
+          ${q.opts.map((opt, optIdx) => `
+            <div onclick="window.handleOptionSelect(${i}, ${optIdx})" 
+                 id="q-${i}-opt-${optIdx}"
+                 class="option-card p-4 rounded-2xl border-2 border-gray-100 flex items-center gap-3 hover:border-blue-500 transition-all bg-white">
+              <span class="w-7 h-7 rounded-lg bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500">${String.fromCharCode(65 + optIdx)}</span>
+              <span class="font-medium text-gray-700">${opt}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+    container.innerHTML += questionHtml;
+  });
+}
+window.handleOptionSelect = (qIdx, optIdx) => {
+  state.exam.userAnswers[qIdx] = optIdx;
+  
+  // UI Update for selection
+  const options = document.querySelectorAll(`#q-block-${qIdx} .option-card`);
+  options.forEach(opt => opt.classList.remove('option-selected', 'border-blue-500', 'bg-blue-50'));
+  
+  const selectedOpt = document.getElementById(`q-${qIdx}-opt-${optIdx}`);
+  selectedOpt.classList.add('option-selected', 'border-blue-500', 'bg-blue-50');
+};
+// এডমিনের দেওয়া সব এক্সাম লিস্ট হোম পেজে দেখানোর ফাংশন
+// এডমিনের দেওয়া সব এক্সাম লিস্ট হোম পেজে দেখানোর ফাংশন
+async function loadAllExamsHome() {
+  const grid = document.getElementById('all-exams-grid');
+  
+  // ১. ইউজারের ডাটাবেজ থেকে প্রিমিয়াম স্ট্যাটাস এবং টাইমিং আনা
+  const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+  const userData = userDoc.data();
+  
+  const isPremium = userData?.isPremium || false;
+  const lastExamAt = userData?.lastExamAt ? userData.lastExamAt.toDate().getTime() : 0;
+  const completedExams = userData?.completedExams || []; // আগে দেওয়া পরীক্ষার আইডি
+  
+  const now = new Date().getTime();
+  const twelveHoursInMs = 12 * 60 * 60 * 1000; // ১২ ঘণ্টা মিলিসেকেন্ডে
+  const timePassed = now - lastExamAt;
+  const timeLeftMs = twelveHoursInMs - timePassed;
+
+  onSnapshot(query(collection(db, "exam_lists"), orderBy("createdAt", "desc")), (snapshot) => {
+    grid.innerHTML = '';
+    
+    snapshot.forEach((doc) => {
+      const data = doc.data();
+      const examId = doc.id;
+      
+      let lockStatus = "open"; // ডিফল্ট খোলা
+      let statusMsg = "পরীক্ষা শুরু করুন";
+      let timeLeftText = "";
+
+      // ২. লক লজিক চেক করা
+      if (!isPremium) {
+        lockStatus = "payment"; // বিকাশ পেমেন্ট লক
+        statusMsg = "প্রিমিয়াম মেম্বারশিপ নিন";
+      } else {
+        // প্রিমিয়াম ইউজার হলে
+        const isAlreadyDone = completedExams.includes(examId);
+        
+        if (!isAlreadyDone && timePassed < twelveHoursInMs) {
+          // এটি নতুন পরীক্ষা এবং ১২ ঘণ্টা পার হয়নি
+          lockStatus = "time";
+          const hours = Math.floor(timeLeftMs / (1000 * 60 * 60));
+          const mins = Math.floor((timeLeftMs % (1000 * 60 * 60)) / (1000 * 60));
+          timeLeftText = `${hours}h ${mins}m পর এক্সেস পাবেন`;
+          statusMsg = "১২ ঘণ্টা পর আনলক হবে";
+        }
+      }
+
+      grid.innerHTML += `
+        <div onclick="${lockStatus === 'payment' ? 'window.openPaymentModal()' : (lockStatus === 'time' ? "window.showToast('দয়া করে ১২ ঘণ্টা অপেক্ষা করুন', true)" : `window.openExam('${examId}')`)}" 
+             class="group relative bg-white p-3 rounded-[2.5rem] border ${lockStatus !== 'open' ? 'border-red-50' : 'border-blue-50'} shadow-sm hover:shadow-xl transition-all cursor-pointer flex flex-col sm:flex-row gap-6 overflow-hidden">
+          
+          <div class="w-full sm:w-48 h-40 rounded-[2rem] overflow-hidden shrink-0 relative">
+            <img src="${data.image}" class="w-full h-full object-cover ${lockStatus !== 'open' ? 'grayscale' : ''}">
+            
+            ${lockStatus === 'payment' ? `
+            <div class="absolute inset-0 bg-red-600/10 flex items-center justify-center">
+               <span class="material-symbols-outlined text-red-600 text-3xl bg-white p-2 rounded-full">lock</span>
+            </div>` : ''}
+
+            ${lockStatus === 'time' ? `
+            <div class="absolute inset-0 bg-amber-600/20 flex items-center justify-center">
+               <span class="material-symbols-outlined text-amber-600 text-3xl bg-white p-2 rounded-full">hourglass_empty</span>
+            </div>` : ''}
+          </div>
+
+          <div class="flex flex-col justify-center pr-4">
+            <div class="flex gap-2 mb-2">
+              <span class="text-[10px] font-black bg-blue-50 text-blue-600 px-3 py-1 rounded-full uppercase">${data.categoryName || 'Exam'}</span>
+              ${lockStatus === 'time' ? `<span class="text-[10px] font-black bg-amber-100 text-amber-700 px-3 py-1 rounded-full uppercase">Waiting</span>` : ''}
+              ${lockStatus === 'payment' ? `<span class="text-[10px] font-black bg-red-600 text-white px-3 py-1 rounded-full uppercase">Premium</span>` : ''}
+            </div>
+
+            <h4 class="text-xl font-black ${lockStatus !== 'open' ? 'text-gray-400' : 'text-gray-800'} leading-tight">${data.name}</h4>
+            
+            <p class="text-gray-500 text-sm mt-2 line-clamp-2">
+               ${lockStatus === 'time' ? `<span class="text-amber-600 font-bold">${timeLeftText}</span>` : (data.desc || 'পরীক্ষা শুরু করতে ক্লিক করুন।')}
+            </p>
+
+            <div class="mt-4 flex items-center gap-2 ${lockStatus === 'open' ? 'text-blue-600' : 'text-gray-400'} font-bold text-sm">
+              <span>${statusMsg}</span>
+              <span class="material-symbols-outlined text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+            </div>
+          </div>
+        </div>`;
+    });
+  });
+}
+
+window.openPaymentModal = () => {
+    document.getElementById('payment-modal').classList.remove('hidden');
+    document.getElementById('payment-modal').style.display = 'flex';
+};
+
+window.submitPaymentRequest = async () => {
+    const trxId = document.getElementById('pay-trxid').value.trim().toUpperCase();
+    const amount = document.getElementById('pay-amount').value;
+
+    if(!trxId || trxId.length < 5) {
+        return window.showToast("অনুগ্রহ করে সঠিক Transaction ID দিন", true);
+    }
+
+    try {
+        // ১. পেমেন্ট ডাটাবেজে পাঠানো
+        await addDoc(collection(db, 'payments'), {
+            userId: auth.currentUser.uid,
+            userEmail: auth.currentUser.email,
+            userName: auth.currentUser.displayName || 'Anonymous',
+            trxId: trxId,
+            amount: amount,
+            status: 'pending', // এডমিন অ্যাপ্রুভ করলে 'approved' হবে
+            createdAt: new Date()
+        });
+
+        document.getElementById('payment-modal').classList.add('hidden');
+        alert('আপনার পেমেন্ট রিকোয়েস্ট পাঠানো হয়েছে। এডমিন ভেরিফাই করলে সব এক্সাম আনলক হয়ে যাবে।');
+        
+    } catch(e) {
+        window.showToast("ত্রুটি: " + e.message, true);
+    }
+};
+// নতুন গ্লোবাল ভেরিয়েবল
+let currentExamData = null;
+
+// এক্সাম শুরু করার ফাংশন
+window.beginMockTest = async () => {
+    // এখানে আপনার ডাটাবেজ থেকে ডাটা লোড করার লজিক (যে কার্ডে ক্লিক করবেন তার ID পাস করতে হবে)
+    // ধরুন একটি উদাহরণ:
+    // const docSnap = await getDoc(doc(db, "exam_lists", examId));
+    // currentExamData = docSnap.data();
+    
+    // আপাতত আপনার currentExamData সেট করে:
+    document.getElementById('exam-start-view').classList.add('hidden');
+    document.getElementById('active-question-view').classList.remove('hidden');
+    
+    state.exam.questions = currentExamData.questions;
+    state.exam.timeLeft = currentExamData.timeLimit * 60;
+    
+    startTimer();
+    renderQuestion();
+};
+window.handleSubmitExam = () => {
+    clearInterval(state.exam.timer);
+    document.getElementById('active-question-view').classList.add('hidden');
+    document.getElementById('result-view').classList.remove('hidden');
+
+    let correct = 0;
+    const marksPerQ = activeExam.marksPerQuestion || 1; // ডাটাবেজ থেকে পাওয়া মার্কস
+
+    state.exam.userAnswers.forEach((ans, i) => {
+        if(ans === state.exam.questions[i].ans) correct++;
+    });
+
+    const totalMarks = correct * marksPerQ;
+    const maxMarks = state.exam.questions.length * marksPerQ;
+    const scorePercent = (correct / state.exam.questions.length) * 100;
+
+    document.getElementById('final-score').textContent = `${totalMarks}/${maxMarks}`;
+    document.getElementById('count-correct').textContent = correct;
+    document.getElementById('count-wrong').textContent = state.exam.questions.length - correct;
+    // handleSubmitExam ফাংশনের একদম শেষে (রেজাল্ট দেখানোর কোডের পর) এটি যোগ করুন
+const updateTimeLimit = async () => {
+    const userRef = doc(db, "users", auth.currentUser.uid);
+    const examId = activeExamData.id || "manual_id"; // নিশ্চিত করুন activeExamData তে ID আছে
+
+    try {
+        await updateDoc(userRef, {
+            lastExamAt: new Date(), // বর্তমান সময় সেভ হবে
+            completedExams: arrayUnion(examId) // এটি 'firebase-firestore' থেকে ইম্পোর্ট করতে হবে
+        });
+        
+        // হোম পেজে ফিরে গেলে যেন নতুন টাইমার দেখায়
+        setTimeout(() => loadAllExamsHome(), 2000); 
+    } catch (e) {
+        console.error("Error updating user limit: ", e);
+    }
+// এই ফাংশনটি স্ক্রিপ্টের যেকোনো জায়গায় রাখুন
+async function saveResultToFirestore(examName, score, total) {
+    if (!auth.currentUser) return;
+    
+    try {
+        await addDoc(collection(db, "user_history"), {
+            userId: auth.currentUser.uid,
+            examName: examName,
+            obtainedScore: score,
+            totalMarks: total,
+            date: new Date(), // এক্সাম দেওয়ার সময়
+            timestamp: Date.now()
+        });
+        console.log("Result saved to history!");
+    } catch (e) {
+        console.error("Error saving history: ", e);
+    }
+}
+
+// আপনার বর্তমান handleSubmitExam ফাংশনের একদম শেষে এটি কল করুন:
+// saveResultToFirestore(activeExamData.name, totalObtainedMarks, totalPossibleMarks);
+};
+
+// এই ফাংশনটি সাবমিট বাটনের লজিকের ভেতরে কল করে দিন।
+updateTimeLimit();
+    // ... বাকি কোড (Circle logic) ...
+};
+// নতুন গ্লোবাল ভেরিয়েবল
+let activeExam = null;
+
+// হোম পেজের কার্ডে ক্লিক করলে এই ফাংশনটি কল হবে
+// এক্সাম লোড করার ফাংশন
+// গ্লোবাল ভেরিয়েবল যা ডাটাবেজ থেকে আসা ডাটা হোল্ড করবে
+let activeExamData = null;
+
+// হোম পেজের কার্ডে ক্লিক করলে এই ফাংশনটি কল হবে
+window.openExam = async (examId) => {
+    try {
+        window.showPage('exam');
+        // UI রিসেট
+        document.getElementById('exam-start-view').classList.remove('hidden');
+        document.getElementById('active-question-view').classList.add('hidden');
+        document.getElementById('result-view').classList.add('hidden');
+        
+        // ডাটাবেজ থেকে ডাটা আনা
+        const docSnap = await getDoc(doc(db, "exam_lists", examId));
+        
+        if (docSnap.exists()) {
+            activeExamData = docSnap.data();
+            
+            // শুরুর স্ক্রিনে ডাটাগুলো দেখানো
+            document.getElementById('start-exam-title').innerText = activeExamData.name;
+            document.getElementById('start-exam-desc').innerText = activeExamData.desc || 'No description available.';
+            document.getElementById('label-total-qs').innerText = (activeExamData.questions ? activeExamData.questions.length : 0) + " Qs";
+            document.getElementById('label-total-marks').innerText = (activeExamData.markPerQ || 1) + " Mark";
+            document.getElementById('label-duration').innerText = (activeExamData.time || 10) + " Min";
+            
+            // টাইমার টেক্সট আপডেট
+            document.getElementById('exam-timer').textContent = `${activeExamData.time || 10}:00`;
+        } else {
+            window.showToast("Exam not found!", true);
+        }
+    } catch (err) {
+        console.error(err);
+        window.showToast("Error loading exam", true);
+    }
+};
+
+// স্টার্ট বাটন ক্লিক করলে এক্সাম শুরু হবে
+window.beginMockTest = () => {
+    if (!activeExamData || !activeExamData.questions || activeExamData.questions.length === 0) {
+        window.showToast("No questions available in this exam!", true);
+        return;
+    }
+
+    // স্টেট আপডেট
+    state.exam.questions = activeExamData.questions;
+    state.exam.currentIdx = 0;
+    state.exam.userAnswers = new Array(activeExamData.questions.length).fill(null);
+    state.exam.timeLeft = (parseInt(activeExamData.time) || 10) * 60; // মিনিটকে সেকেন্ডে রূপান্তর
+    state.exam.isStarted = true;
+
+    // UI পরিবর্তন
+    document.getElementById('exam-start-view').classList.add('hidden');
+    document.getElementById('active-question-view').classList.remove('hidden');
+    
+    startTimer();
+    renderQuestion();
+};
+
+// সাবমিট লজিক (মার্ক ক্যালকুলেশন সহ)
+// আপনার handleSubmitExam ফাংশনটি এখান থেকে কপি করুন
+window.handleSubmitExam = async () => {
+    // ১. টাইমার বন্ধ করা এবং স্ক্রিন পরিবর্তন
+    clearInterval(state.exam.timer);
+    document.getElementById('active-question-view').classList.add('hidden');
+    document.getElementById('result-view').classList.remove('hidden');
+
+    let correctCount = 0;
+    const markPerQ = parseFloat(activeExamData.markPerQ) || 1;
+    const analysisContainer = document.getElementById('exam-analysis-list');
+    analysisContainer.innerHTML = ''; // আগের ডাটা ক্লিয়ার করা
+
+    // ২. রেজাল্ট এনালাইসিস এবং সঠিক উত্তর গণনা
+    state.exam.questions.forEach((q, i) => {
+        const userAns = state.exam.userAnswers[i];
+        const isCorrect = userAns !== null && userAns === q.ans;
+        if(isCorrect) correctCount++;
+
+        const card = document.createElement('div');
+        card.className = `p-5 rounded-3xl border ${isCorrect ? 'bg-green-50/50 border-green-100' : 'bg-red-50/50 border-red-100'}`;
+        
+        card.innerHTML = `
+            <div class="flex items-start gap-3">
+                <span class="w-6 h-6 shrink-0 rounded-full flex items-center justify-center text-xs font-bold ${isCorrect ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}">
+                    ${i + 1}
+                </span>
+                <div class="flex-1">
+                    <h4 class="font-bold text-gray-800 mb-3">${q.q}</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                        <div class="text-sm p-2 rounded-xl bg-white border ${userAns === q.ans ? 'border-green-500 ring-1 ring-green-500' : 'border-gray-100'}">
+                            <span class="text-gray-400 font-bold">আপনার উত্তর:</span> 
+                            <span class="${userAns === q.ans ? 'text-green-700' : 'text-red-600'} font-bold">
+                                ${userAns !== null ? q.opts[userAns] : 'উত্তর দেননি'}
+                            </span>
+                        </div>
+                        <div class="text-sm p-2 rounded-xl bg-white border border-green-500">
+                            <span class="text-gray-400 font-bold">সঠিক উত্তর:</span> 
+                            <span class="text-green-700 font-bold">${q.opts[q.ans]}</span>
+                        </div>
+                    </div>
+                    ${q.expl ? `
+                        <div class="mt-3 p-3 bg-blue-50 rounded-2xl border border-blue-100">
+                            <p class="text-xs font-black text-blue-700 uppercase mb-1">ব্যাখ্যা (Explanation):</p>
+                            <p class="text-sm text-gray-700 leading-relaxed">${q.expl}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `;
+        analysisContainer.appendChild(card);
+    });
+
+    // ৩. স্কোর ক্যালকুলেশন
+    const scorePercent = (correctCount / state.exam.questions.length) * 100;
+    const totalObtainedMarks = correctCount * markPerQ;
+    const totalPossibleMarks = state.exam.questions.length * markPerQ;
+
+    // ৪. UI আপডেট (রেজাল্ট স্ক্রিন)
+    document.getElementById('final-score').textContent = scorePercent.toFixed(0) + "%";
+    document.getElementById('result-message').textContent = `আপনি ${totalPossibleMarks} এর মধ্যে ${totalObtainedMarks} পেয়েছেন।`;
+    document.getElementById('count-correct').textContent = correctCount;
+    document.getElementById('count-wrong').textContent = state.exam.questions.length - correctCount;
+    
+    const offset = 282.7 - (282.7 * scorePercent / 100);
+    document.getElementById('score-circle').style.strokeDashoffset = offset;
+
+    // ৫. ডাটাবেজে হিস্ট্রি সেভ করা এবং ১২ ঘণ্টার লিমিট আপডেট করা
+    if (auth.currentUser) {
+        try {
+            const userRef = doc(db, "users", auth.currentUser.uid);
+            
+            // ক) হিস্ট্রি সেভ (নতুন কালেকশনে)
+            await addDoc(collection(db, "user_history"), {
+                userId: auth.currentUser.uid,
+                examName: activeExamData.name,
+                score: totalObtainedMarks,
+                total: totalPossibleMarks,
+                percent: scorePercent.toFixed(0),
+                date: new Date()
+            });
+
+            // খ) ইউজারের প্রফাইলে ১২ ঘণ্টার লক আপডেট (যদি ডেমো টেস্ট না হয়)
+            if (activeExamData.id) {
+                // এখানে 'updateDoc' এবং 'arrayUnion' আপনার Firebase import এ থাকতে হবে
+                const { updateDoc, arrayUnion } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
+                
+                await updateDoc(userRef, {
+                    lastExamAt: new Date(),
+                    completedExams: arrayUnion(activeExamData.id)
+                });
+            }
+            
+            console.log("History & Time limit updated successfully!");
+        } catch (e) {
+            console.error("Error saving data: ", e);
+        }
+    }
+};
+// ফ্রি ট্রায়াল এক্সাম শুরু করার ফাংশন
+window.startFreeTrial = () => {
+    // ডেমো টেস্টের প্রশ্নগুলো
+    const demoQuestions = [
+        { q: "Choose the correct spelling:", opts: ["Enviroment", "Environmant", "Environment", "Enviornment"], ans: 2, expl: "The correct spelling is Environment." },
+        { q: "What is the synonym of 'Ancient'?", opts: ["Modern", "Old", "New", "Recent"], ans: 1, expl: "Ancient means something very old." },
+        { q: "Identify the antonym of 'Generous'.", opts: ["Kind", "Helpful", "Selfish", "Honest"], ans: 2, expl: "Antonym of Generous (দয়ালু) is Selfish (স্বার্থপর)." },
+        { q: "Choose the correct passive form: 'They built the bridge.'", opts: ["The bridge built by them.", "The bridge was built by them.", "The bridge is built by them.", "The bridge has built by them."], ans: 1, expl: "Past Indefinite passive: Obj + was/were + V3." },
+        { q: "Fill in the blank: He succeeded _____ hard work.", opts: ["in", "by", "through", "at"], ans: 2, expl: "Succeeded through means achieving something via a process." },
+        { q: "Which sentence is grammatically correct?", opts: ["She don't like coffee.", "She doesn't likes coffee.", "She doesn't like coffee.", "She not like coffee."], ans: 2, expl: "Third person singular takes 'does not' and base form of verb." },
+        { q: "What is the meaning of 'Optimistic'?", opts: ["Hopeful", "Careless", "Angry", "Weak"], ans: 0, expl: "Optimistic means being hopeful about the future." },
+        { q: "Choose the correct article: He is _____ honest man.", opts: ["a", "an", "the", "no article"], ans: 1, expl: "'Honest' starts with a vowel sound (O), so 'an' is used." },
+        { q: "Who wrote the play 'Hamlet'?", opts: ["Charles Dickens", "John Milton", "William Shakespeare", "William Wordsworth"], ans: 2, expl: "Hamlet is a famous tragedy by William Shakespeare." },
+        { q: "Translate into English: 'সততাই সর্বোত্তম নীতি।' ", opts: ["Honesty is a good policy.", "Honesty is the best policy.", "Truth is power.", "Policy is honesty."], ans: 1, expl: "This is a common proverb." }
+    ];
+
+    // ডাটা সেটআপ (অ্যাক্টিভ এক্সাম ডাটা অবজেক্ট তৈরি করা)
+    activeExamData = {
+        name: "English Dept. Admission Demo Test – 02",
+        desc: "নিজেকে যাচাই করুন, প্রস্তুতিকে এগিয়ে নিন।",
+        time: 15,
+        markPerQ: 1,
+        questions: demoQuestions
+    };
+
+    // সরাসরি এক্সাম পেজে নিয়ে যাওয়া
+    window.showPage('exam');
+    
+    // UI রিসেট করে শুরু করা
+    document.getElementById('exam-start-view').classList.remove('hidden');
+    document.getElementById('active-question-view').classList.add('hidden');
+    document.getElementById('result-view').classList.add('hidden');
+
+    // শুরুর স্ক্রিনের তথ্য আপডেট
+    document.getElementById('start-exam-title').innerText = activeExamData.name;
+    document.getElementById('start-exam-desc').innerText = activeExamData.desc;
+    document.getElementById('label-total-qs').innerText = "10 Qs";
+    document.getElementById('label-total-marks').innerText = "1 Mark";
+    document.getElementById('label-duration').innerText = "15 Min";
+    document.getElementById('exam-timer').textContent = "15:00";
+};
+
+// কন্টেন্ট ওপেন করার ফাংশন
+
+// এই ফাংশনটির নাম এখন HTML এর সাথে মিলিয়ে দেওয়া হলো
+window.openGrammarContent = (slug) => {
+  const contentArea = document.getElementById('grammar-content-area');
+  
+  // আমরা শুধু 'parts-of-speech' এর জন্য এই কন্টেন্টটি দেখাবো
+  const contentHtml = `
+    <div class="space-y-12 pb-20">
+      <!-- Intro Section -->
+      <section class="bg-gradient-to-br from-blue-600 to-blue-800 p-8 rounded-[2.5rem] text-white shadow-xl">
+        <h1 class="text-4xl font-black mb-4">Parts of Speech (শব্দের পদ)</h1>
+        <div class="space-y-4 opacity-90">
+          <p class="text-lg leading-relaxed font-medium">A sentence is made up of different kinds of words. According to their functions in a sentence, words are divided into different classes. These classes are called <b>Parts of Speech</b>.</p>
+          <p class="bg-white/10 p-4 rounded-2xl border border-white/20 italic">বাংলা: একটি বাক্যে শব্দ যে কাজ করে তার ভিত্তিতে শব্দকে বিভিন্ন শ্রেণিতে ভাগ করা হয়। এই শ্রেণিগুলোকে Parts of Speech বলে।</p>
+        </div>
+      </section>
+
+      <!-- Shortcut Card -->
+      <div class="bg-amber-50 p-6 rounded-3xl border border-amber-100 flex items-center gap-4">
+        <div class="w-12 h-12 bg-amber-500 text-white rounded-full flex items-center justify-center font-black">!</div>
+        <div>
+          <h4 class="font-black text-amber-900">Parts of Speech are 8 kinds (Shortcut: NPAVAPCI)</h4>
+          <p class="text-amber-800/80 text-sm">Noun, Pronoun, Adjective, Verb, Adverb, Preposition, Conjunction, Interjection</p>
+        </div>
+      </div>
+
+      <!-- Detail Sections (A to Z) -->
+      <div class="space-y-16">
+
+        <!-- 1. NOUN -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-black">1</span>
+            <h2 class="text-2xl font-black text-gray-800">Noun (বিশেষ্য)</h2>
+          </div>
+          <div class="space-y-6">
+            <div class="bg-gray-50 p-6 rounded-3xl border">
+              <p class="font-bold mb-2">Definition:</p>
+              <p class="text-gray-600">A noun is a word used as the name of a person, place, thing, animal, or idea. (ব্যক্তি, স্থান, বস্তু, প্রাণী বা ধারণার নাম)</p>
+            </div>
+            <div class="grid gap-4">
+              <div class="p-4 border rounded-2xl">
+                <p class="font-black text-blue-600 text-sm">Types of Noun (৫ প্রকার)</p>
+                <ul class="mt-3 space-y-3 text-sm">
+                  <li><b>1. Proper:</b> নির্দিষ্ট নাম (Rahim, Dhaka, Bangladesh)</li>
+                  <li><b>2. Common:</b> জাতিবাচক নাম (Boy, City, River)</li>
+                  <li><b>3. Collective:</b> সমষ্টিবাচক নাম (Army, Team, Class)</li>
+                  <li><b>4. Material:</b> বস্তুবাচক নাম (Gold, Water, Iron)</li>
+                  <li><b>5. Abstract:</b> ভাববাচক নাম (Honesty, Freedom, Kindness)</li>
+                </ul>
+              </div>
+              <div class="bg-green-50 p-5 rounded-2xl border border-green-100">
+                <p class="font-bold text-green-800 text-sm mb-3">MCQ: Which is a Collective Noun?</p>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="alert('ভুল! Soldier হলো Common Noun')" class="bg-white p-2 rounded-lg border text-xs">a) Soldier</button>
+                  <button onclick="alert('সঠিক উত্তর!')" class="bg-white p-2 rounded-lg border-2 border-green-500 text-xs font-bold">b) Army ✅</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. PRONOUN -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center font-black">2</span>
+            <h2 class="text-2xl font-black text-gray-800">Pronoun (সর্বনাম)</h2>
+          </div>
+          <div class="space-y-6">
+            <p class="text-gray-600">A pronoun is a word used instead of a noun. (Noun-এর পরিবর্তে ব্যবহৃত শব্দ)</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="p-4 bg-purple-50 rounded-2xl border border-purple-100">
+                <p class="font-bold text-purple-700 text-xs uppercase mb-2">Types of Pronoun (৮ প্রকার)</p>
+                <ul class="text-xs space-y-1 text-gray-600">
+                  <li>• Personal: I, We, You, He, She, They</li>
+                  <li>• Demonstrative: This, That, These, Those</li>
+                  <li>• Interrogative: Who, Whom, Which, What</li>
+                  <li>• Relative: Who, Which, That, Whom</li>
+                  <li>• Possessive: Mine, Yours, Ours, Hers</li>
+                  <li>• Reflexive: Myself, Yourself, Himself</li>
+                  <li>• Indefinite: Someone, Anyone, Nobody</li>
+                  <li>• Distributive: Each, Either, Neither</li>
+                </ul>
+              </div>
+              <div class="bg-green-50 p-5 rounded-2xl border border-green-100">
+                <p class="font-bold text-green-800 text-sm mb-3">MCQ: Which is a Reflexive Pronoun?</p>
+                <div class="grid grid-cols-2 gap-2">
+                  <button onclick="alert('সঠিক উত্তর!')" class="bg-white p-2 rounded-lg border-2 border-green-500 text-xs font-bold">a) Himself ✅</button>
+                  <button onclick="alert('ভুল! They হলো Personal Pronoun')" class="bg-white p-2 rounded-lg border text-xs">b) They</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. ADJECTIVE -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-pink-100 text-pink-600 rounded-xl flex items-center justify-center font-black">3</span>
+            <h2 class="text-2xl font-black text-gray-800">Adjective (বিশেষণ)</h2>
+          </div>
+          <div class="bg-pink-50/50 p-6 rounded-3xl space-y-4">
+            <p class="text-gray-600 italic">An adjective qualifies or describes a noun or pronoun. (Noun বা Pronoun-এর গুণ, দোষ, অবস্থা বা সংখ্যা প্রকাশ করে)</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 bg-white rounded-2xl border text-sm">
+                   <p class="font-bold text-pink-700 mb-2">Types (৬ প্রকার):</p>
+                   Quality, Quantity, Number, Demonstrative, Possessive, Interrogative.
+                </div>
+                <div class="p-4 bg-white rounded-2xl border text-sm">
+                   <p class="font-bold text-pink-700 mb-2">Examples:</p>
+                   Beautiful, Honest, Red, Tall, Much, Many.
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. VERB -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-red-100 text-red-600 rounded-xl flex items-center justify-center font-black">4</span>
+            <h2 class="text-2xl font-black text-gray-800">Verb (ক্রিয়া)</h2>
+          </div>
+          <div class="bg-red-50/50 p-6 rounded-3xl space-y-4">
+            <p class="text-gray-600">A verb expresses an action, state, or occurrence. (কাজ, অবস্থা বা ঘটনা প্রকাশকারী শব্দ)</p>
+            <p class="font-bold">Examples: <span class="text-red-600">Go, Read, Write, Play, Is, Have</span></p>
+            <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-sm">
+               <b>MCQ: Which word is a Verb?</b><br>
+               <div class="flex gap-4 mt-2">
+                 <button onclick="alert('সঠিক!')" class="bg-white px-4 py-2 rounded-lg border-2 border-green-500 font-bold">Run ✅</button>
+                 <button onclick="alert('ভুল!')" class="bg-white px-4 py-2 rounded-lg border">Beautiful</button>
+               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. ADVERB -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center font-black">5</span>
+            <h2 class="text-2xl font-black text-gray-800">Adverb (ক্রিয়া বিশেষণ)</h2>
+          </div>
+          <div class="bg-orange-50/50 p-6 rounded-3xl space-y-4">
+            <p class="text-gray-600 italic">An adverb modifies a verb, adjective, or another adverb. (Verb বা Adjective-এর অর্থকে বিশেষায়িত করে)</p>
+            <p class="font-bold">Examples: <span class="text-orange-600">Quickly, Slowly, Well, Often, Very</span></p>
+            <div class="p-4 bg-white rounded-2xl border text-sm">
+               <b>MCQ: Which is an Adverb?</b><br>
+               <button onclick="alert('সঠিক!')" class="mt-2 bg-orange-100 text-orange-700 px-4 py-2 rounded-lg font-bold">Quickly ✅</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. PREPOSITION -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center font-black">6</span>
+            <h2 class="text-2xl font-black text-gray-800">Preposition (পদান্বয়ী অব্যয়)</h2>
+          </div>
+          <div class="bg-indigo-50/50 p-6 rounded-3xl space-y-4">
+            <p class="text-gray-600">Shows relationship between words. (বাক্যের শব্দগুলোর মধ্যে সম্পর্ক প্রকাশ করে)</p>
+            <p class="font-bold">Examples: <span class="text-indigo-600">In, On, At, Under, For, From</span></p>
+            <div class="bg-green-50 p-4 rounded-2xl border border-green-100 text-sm">
+               <b>MCQ: Which is a Preposition?</b><br>
+               <button onclick="alert('সঠিক!')" class="mt-2 bg-indigo-100 text-indigo-700 px-4 py-2 rounded-lg font-bold">In ✅</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. CONJUNCTION -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-cyan-100 text-cyan-600 rounded-xl flex items-center justify-center font-black">7</span>
+            <h2 class="text-2xl font-black text-gray-800">Conjunction (সংযোজক)</h2>
+          </div>
+          <div class="bg-cyan-50/50 p-6 rounded-3xl space-y-4">
+            <p class="text-gray-600">Joins words, phrases, or clauses. (দুই বা ততোধিক শব্দ বা বাক্যকে যুক্ত করে)</p>
+            <p class="font-bold">Examples: <span class="text-cyan-600">And, But, Or, Because, Since</span></p>
+          </div>
+        </div>
+
+        <!-- 8. INTERJECTION -->
+        <div class="grammar-block">
+          <div class="flex items-center gap-4 mb-6 border-b pb-4">
+            <span class="w-10 h-10 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-black">8</span>
+            <h2 class="text-2xl font-black text-gray-800">Interjection (আবেগসূচক অব্যয়)</h2>
+          </div>
+          <div class="bg-yellow-50/50 p-6 rounded-3xl space-y-4">
+            <p class="text-gray-600 italic">Expresses sudden emotion or feeling. (হঠাৎ আনন্দ, দুঃখ বা বিস্ময় প্রকাশ করে)</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
+               <div class="p-3 bg-white rounded-xl border font-bold">Joy: Hurrah!</div>
+               <div class="p-3 bg-white rounded-xl border font-bold">Sorrow: Alas!</div>
+               <div class="p-3 bg-white rounded-xl border font-bold">Surprise: Wow!</div>
+               <div class="p-3 bg-white rounded-xl border font-bold">Approval: Bravo!</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Button -->
+      <div class="text-center pt-10">
+        <button onclick="window.showPage('others')" class="w-full max-w-xs bg-blue-600 text-white py-4 rounded-2xl font-black shadow-xl hover:bg-blue-700 transition-all">
+          Back to Course List
+        </button>
+      </div>
+    </div>
+  `;
+  
+  contentArea.innerHTML = contentHtml;
+  window.showPage('grammar-view');
+};
+window.openHistoryPage = async () => {
+    window.showPage('history');
+    const historyList = document.getElementById('history-list');
+    historyList.innerHTML = '<div class="text-center py-10">লোড হচ্ছে...</div>';
+
+    if (!auth.currentUser) return;
+
+    try {
+        // ইউজারের আইডি অনুযায়ী ডাটাবেজ থেকে রেজাল্ট নিয়ে আসা
+        const q = query(
+            collection(db, "user_history"), 
+            where("userId", "==", auth.currentUser.uid),
+            orderBy("date", "desc")
+        );
+        
+        const querySnapshot = await getDocs(q);
+        historyList.innerHTML = '';
+
+        if (querySnapshot.empty) {
+            historyList.innerHTML = '<div class="text-center py-10 text-gray-400 font-bold">আপনি এখনো কোনো পরীক্ষা দেননি।</div>';
+            return;
+        }
+
+        querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            const examDate = data.date.toDate().toLocaleDateString('bn-BD', {
+                year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            });
+
+            const percent = Math.round((data.obtainedScore / data.totalMarks) * 100);
+
+            historyList.innerHTML += `
+                <div class="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-sm flex items-center justify-between">
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 ${percent >= 40 ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'} rounded-2xl flex items-center justify-center font-black">
+                            ${percent}%
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">${data.examName}</h4>
+                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-wider">${examDate}</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-lg font-black text-blue-600">${data.obtainedScore}/${data.totalMarks}</p>
+                        <p class="text-[10px] text-gray-400 font-bold uppercase">Marks</p>
+                    </div>
+                </div>
+            `;
+        });
+    } catch (err) {
+        console.error(err);
+        historyList.innerHTML = '<div class="text-center py-10 text-red-500">ডাটা লোড করতে সমস্যা হয়েছে।</div>';
+    }
+};
+// প্রোফাইল পেজ ওপেন এবং ডাটা লোড করার ফাংশন
+window.openProfilePage = async () => {
+    window.showPage('profile');
+    
+    if (!auth.currentUser) return;
+
+    try {
+        // Firebase Firestore থেকে ইউজারের ডাটা আনা
+        const userDoc = await getDoc(doc(db, "users", auth.currentUser.uid));
+        
+        if (userDoc.exists()) {
+            const data = userDoc.data();
+            
+            // UI আপডেট করা
+            document.getElementById('profile-name').innerText = data.displayName || "User Name";
+            document.getElementById('profile-email').innerText = data.email || auth.currentUser.email;
+            document.getElementById('profile-uni').innerText = data.university || "University not set";
+            
+            // প্রিমিয়াম স্ট্যাটাস চেক
+            if(data.isPremium) {
+                document.getElementById('profile-status').innerText = "Premium Member";
+                document.getElementById('profile-status').className = "font-bold text-blue-600 text-sm";
+            } else {
+                document.getElementById('profile-status').innerText = "Free User";
+            }
+
+            // নাম দিয়ে প্রোফাইল ইমেজ জেনারেট করা (UI-Avatars)
+            const initials = (data.displayName || "U").split(' ').map(n => n[0]).join('');
+            document.getElementById('profile-img').src = `https://ui-avatars.com/api/?name=${initials}&background=005bbf&color=fff&size=128&bold=true`;
+        }
+    } catch (err) {
+        console.error("Profile Error:", err);
+    }
+};
+  </script>
+</body>
+</html>
